@@ -1,3 +1,6 @@
+/**
+ *function_initialization_mordern.cpp
+ */
 #include <iostream>
 #include <vector>
 #include <initializer_list>

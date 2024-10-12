@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -Wall -std=c++2a
 
-TARGETS = cplusplus_null nullptr_example
+TARGETS = nullptr
 
 all: $(TARGETS)
 

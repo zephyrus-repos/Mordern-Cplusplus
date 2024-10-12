@@ -1,5 +1,5 @@
 /**
- *nullptr_example.cpp
+ * nullptr_example.cpp
  */
 #include <iostream>
 #include <type_traits>
