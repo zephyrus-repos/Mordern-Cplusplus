@@ -368,6 +368,8 @@ std::tuple<int, double, std::string> f() {
 int main() {
     auto [x, y, z] = f();
     std::cout << x << ", " << y << ", " << z << std::endl;
+
+    return 0;
 }
 ```
 
@@ -375,7 +377,100 @@ int main() {
 
 ## 类型推导
 
+在传统 C 和 C++ 中，参数的类型都必须明确定义，这其实对我们快速进行编码没有任何帮助，尤其是当我们面对一大堆复杂的模板类型时，必须明确的指出变量的类型才能进行后续的编码，这不仅拖慢我们的开发效率，也让代码变得又臭又长。
 
+C++11 引入了 `auto` 和 `decltype` 这两个关键字实现了类型推导，让编译器来操心变量的类型。这使得 C++ 也具有了和其他现代编程语言一样，某种意义上提供了无需操心变量类型的使用习惯。
+
+### `auto`关键字
+
+本小节代码见文件夹`keyword auto`。
+
+`auto` 在很早以前就已经进入了 C++，但是他始终作为一个存储类型的指示符存在，与 `register` 并存。在传统 C++ 中，如果一个变量没有声明为 `register` 变量，将自动被视为一个 `auto` 变量。而随着 `register` 被弃用（在 C++17 中作为保留关键字，以后使用，目前不具备实际意义），对 `auto` 的语义变更也就非常自然了。
+
+`auto`的常见用法包括但不限于：
+
+```cpp
+auto i = 5;	// i 被推导为 int
+auto arr = new auto(10);	// arr被推导为 int *
+......
+```
+
+从C++11开始，可以使用`auto`推导迭代器类型。示例如下：
+
+```cpp
+/**
+ *auto-iterator.cpp
+ */
+#include <iostream>
+#include <vector>
+#include <initializer_list>
+
+class MagicFoo {
+  public:
+    std::vector<int> vec;
+    MagicFoo(std::initializer_list<int> list) {
+        // 从C++11开始，使用auto关键字进行类型推导
+        for (auto it = list.begin(); it != list.end(); ++it) {
+            vec.push_back(*it);
+        }
+    }
+};
+
+int main() {
+    MagicFoo magicFoo = {1, 2, 3, 4, 5};
+    std::cout << "magicFoo: \n";
+    for (auto element : magicFoo.vec) {
+        std::cout << element << std::endl;
+    }
+
+    return 0;
+}
+```
+
+从 C++ 14 起，`auto` 能用于 `lambda` 表达式中的函数传参，而 C++ 20 起该功能推广到了一般的函数。示例如下：
+
+```cpp
+/**
+ * auto_functions.cpp
+ */
+#include <iostream>
+
+// introduced in C++14
+auto add14 = [](auto x, auto y) -> int {
+    return x + y;
+};
+
+// introduced in C++20
+int add20(auto x, auto y) {
+    return x + y;
+}
+
+int main() {
+    auto i = 5;
+    auto j = 5;
+
+    std::cout << add14(i, j) << std::endl;
+    std::cout << add20(i, j) << std::endl;
+
+    return 0;
+}
+```
+
+
+
+### `decltype`关键字
+
+本小节代码见文件夹。
+
+
+
+### 尾返回类型推导
+
+本小节代码见文件夹。
+
+### `decltype(auto)`
+
+本小节代码见文件夹。
 
 ## 控制流
 
