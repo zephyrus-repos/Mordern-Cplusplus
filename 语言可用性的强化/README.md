@@ -456,17 +456,62 @@ int main() {
 }
 ```
 
-
+>**注意**：auto 还不能用于推导数组类型：
+>
+>```cpp
+>auto auto_arr2[10] = {arr}; // 错误, 无法推导数组元素类型
+>```
 
 ### `decltype`关键字
 
 本小节代码见文件夹。
 
+`decltype` 关键字是为了解决 `auto` 关键字只能对变量进行类型推导的缺陷而出现的。它的用法和 `typeof` 很相似：
 
+```cpp
+decltype(表达式)
+```
+
+有时候，我们可能需要计算某个表达式的类型，例如：
+
+```cpp
+auto x = 1;
+auto y = 2;
+decltype(x+y) z;
+```
+
+使用`decltype`关键字的完整示例如下：
+
+```cpp
+/**
+ *decltype_usage.cpp
+ */
+#include <iostream>
+
+int main() {
+    auto x = 1;
+    auto y = 2;
+    decltype(x + y) z;
+
+    if (std::is_same<decltype(x), int>::value) {
+        std::cout << "type x == int" << std::endl;
+    }
+    if (std::is_same<decltype(x), float>::value) {
+        std::cout << "type x == float" << std::endl;
+    }
+    if (std::is_same<decltype(x), decltype(z)>::value) {
+        std::cout << "type z == type x" << std::endl;
+    }
+
+    return 0;
+}
+```
 
 ### 尾返回类型推导
 
 本小节代码见文件夹。
+
+
 
 ### `decltype(auto)`
 
